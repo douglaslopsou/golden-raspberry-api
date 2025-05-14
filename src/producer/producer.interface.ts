@@ -14,3 +14,10 @@ export interface ProducerAwardIntervalResponse {
   min: ProducerInterval[];
   max: ProducerInterval[];
 }
+
+export interface ProducerAwardInterval {
+  producer: string;
+  interval: number;
+  previousWin: number;
+  followingWin: number;
+}

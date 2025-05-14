@@ -1,13 +1,13 @@
-import { ProducerResponse } from 'src/producer/producer.interface';
-import { StudioResponse } from 'src/studio/studio.interface';
+import { Producer } from 'src/producer/producer.entity';
+import { Studio } from 'src/studio/studio.entity';
 
 export interface MovieResponse {
   id: number;
   year: number;
   title: string;
   winner: boolean;
-  studios: StudioResponse[];
-  producers: ProducerResponse[];
+  studios: Studio[];
+  producers: Producer[];
 }
 
 export interface MovieCsvRow {

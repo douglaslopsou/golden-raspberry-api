@@ -23,6 +23,6 @@ export class StudioService {
   }
 
   async findAll(): Promise<Studio[]> {
-    return this.studioRepository.find();
+    return this.studioRepository.find({ relations: ['movies'] });
   }
 }
