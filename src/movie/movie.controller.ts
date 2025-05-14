@@ -8,20 +8,6 @@ export class MovieController {
 
   @Get()
   async findAll(): Promise<MovieResponse[]> {
-    const movies = await this.movieService.findAll();
-    return movies.map((movie) => ({
-      id: movie.id,
-      year: movie.year,
-      title: movie.title,
-      winner: movie.winner,
-      studio: {
-        id: movie.studio.id,
-        name: movie.studio.name,
-      },
-      producer: {
-        id: movie.producer.id,
-        name: movie.producer.name,
-      },
-    }));
+    return this.movieService.findAll();
   }
 }

@@ -9,3 +9,11 @@ export interface MovieResponse {
   studios: StudioResponse[];
   producers: ProducerResponse[];
 }
+
+export interface MovieCsvRow {
+  year: number;
+  title: string;
+  winner?: string;
+  studios: string;
+  producers: string;
+}
