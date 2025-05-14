@@ -125,3 +125,26 @@ The tests ensure that the endpoints return data consistent with the movies read 
 ## 📟 License
 
 This project is licensed under the MIT License.
+
+## Diagrama ER
+
+```mermaid
+erDiagram
+    MOVIE {
+        int id
+        int year
+        string title
+        boolean winner
+    }
+    PRODUCER {
+        int id
+        string name
+    }
+    STUDIO {
+        int id
+        string name
+    }
+
+    MOVIE ||--o{ PRODUCER : "has many > < produced by"
+    MOVIE ||--o{ STUDIO : "has many > < produced by"
+```
