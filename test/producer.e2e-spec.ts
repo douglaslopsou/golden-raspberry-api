@@ -8,6 +8,7 @@ import { Movie } from '../src/movie/movie.entity';
 import { Producer } from '../src/producer/producer.entity';
 import { Studio } from '../src/studio/studio.entity';
 import { Server } from 'http';
+import { ProducerAwardInterval } from 'src/producer/producer.interface';
 
 describe('ProducerController (e2e)', () => {
   let app: INestApplication;
@@ -29,7 +30,7 @@ describe('ProducerController (e2e)', () => {
     const res = await request(app.getHttpServer() as Server).get('/producers');
     expect(res.status).toBe(200);
     expect(Array.isArray(res.body)).toBe(true);
-    const producers = res.body as any[];
+    const producers = res.body as Producer[];
     if (producers.length > 0) {
       expect(producers[0]).toHaveProperty('id');
       expect(producers[0]).toHaveProperty('name');
@@ -41,7 +42,10 @@ describe('ProducerController (e2e)', () => {
       '/producers/award-interval',
     );
     expect(res.status).toBe(200);
-    const interval = res.body as { min: any[]; max: any[] };
+    const interval = res.body as {
+      min: ProducerAwardInterval[];
+      max: ProducerAwardInterval[];
+    };
     expect(interval).toHaveProperty('min');
     expect(interval).toHaveProperty('max');
     expect(Array.isArray(interval.min)).toBe(true);
@@ -60,7 +64,7 @@ describe('ProducerController (e2e)', () => {
     const res = await request(app.getHttpServer() as Server).get('/producers');
     expect(res.status).toBe(200);
     expect(Array.isArray(res.body)).toBe(true);
-    const producers = res.body as any[];
+    const producers = res.body as Producer[];
     expect(producers.length).toBe(0);
   });
 
@@ -76,7 +80,10 @@ describe('ProducerController (e2e)', () => {
     const res = await request(app.getHttpServer() as Server).get(
       '/producers/award-interval',
     );
-    const interval = res.body as { min: any[]; max: any[] };
+    const interval = res.body as {
+      min: ProducerAwardInterval[];
+      max: ProducerAwardInterval[];
+    };
     expect(res.status).toBe(200);
     expect(interval).toHaveProperty('min');
     expect(interval).toHaveProperty('max');
@@ -98,7 +105,7 @@ describe('ProducerController (e2e)', () => {
     const res = await request(app.getHttpServer() as Server).get('/studios');
     expect(res.status).toBe(200);
     expect(Array.isArray(res.body)).toBe(true);
-    const studios = res.body as any[];
+    const studios = res.body as Studio[];
     expect(studios.length).toBe(0);
   });
 
@@ -131,7 +138,10 @@ describe('ProducerController (e2e)', () => {
     const res = await request(app.getHttpServer() as Server).get(
       '/producers/award-interval',
     );
-    const interval = res.body as { min: any[]; max: any[] };
+    const interval = res.body as {
+      min: ProducerAwardInterval[];
+      max: ProducerAwardInterval[];
+    };
     expect(res.status).toBe(200);
     expect(interval).toHaveProperty('min');
     expect(interval).toHaveProperty('max');
