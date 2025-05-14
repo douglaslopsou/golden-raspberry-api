@@ -8,7 +8,7 @@ import { Studio } from '../studio/studio.entity';
 import { Producer } from '../producer/producer.entity';
 import { join } from 'path';
 import * as dotenv from 'dotenv';
-import { MovieResponse, MovieCsvRow } from './movie.interface';
+import { MovieCsvRow } from './movie.interface';
 dotenv.config();
 
 @Injectable()
@@ -22,7 +22,7 @@ export class MovieService {
     private producerRepository: Repository<Producer>,
   ) {}
 
-  async findAll(): Promise<MovieResponse[]> {
+  async findAll(): Promise<Movie[]> {
     return await this.movieRepository.find({
       relations: ['studios', 'producers'],
       order: { year: 'ASC' },

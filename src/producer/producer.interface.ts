@@ -1,8 +1,3 @@
-export interface ProducerResponse {
-  id: number;
-  name: string;
-}
-
 export interface ProducerInterval {
   producer: string;
   interval: number;
