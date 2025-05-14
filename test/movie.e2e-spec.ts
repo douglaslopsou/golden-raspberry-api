@@ -34,8 +34,18 @@ describe('MovieController (e2e)', () => {
       expect(movies[0]).toHaveProperty('title');
       expect(movies[0]).toHaveProperty('year');
       expect(movies[0]).toHaveProperty('winner');
-      expect(movies[0]).toHaveProperty('studio');
-      expect(movies[0]).toHaveProperty('producer');
+      expect(movies[0]).toHaveProperty('studios');
+      expect(Array.isArray(movies[0].studios)).toBe(true);
+      if (movies[0].studios.length > 0) {
+        expect(movies[0].studios[0]).toHaveProperty('id');
+        expect(movies[0].studios[0]).toHaveProperty('name');
+      }
+      expect(movies[0]).toHaveProperty('producers');
+      expect(Array.isArray(movies[0].producers)).toBe(true);
+      if (movies[0].producers.length > 0) {
+        expect(movies[0].producers[0]).toHaveProperty('id');
+        expect(movies[0].producers[0]).toHaveProperty('name');
+      }
     }
   });
 
