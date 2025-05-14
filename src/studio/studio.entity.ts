@@ -1,5 +1,5 @@
 import { Movie } from '../movie/movie.entity';
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
 
 @Entity()
 export class Studio {
@@ -9,6 +9,6 @@ export class Studio {
   @Column({ unique: true })
   name: string;
 
-  @OneToMany(() => Movie, (movie) => movie.studio)
+  @ManyToMany(() => Movie, (movie) => movie.studios)
   movies: Movie[];
 }

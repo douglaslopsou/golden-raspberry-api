@@ -1,6 +1,12 @@
 import { Producer } from '../producer/producer.entity';
 import { Studio } from '../studio/studio.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
 
 @Entity()
 export class Movie {
@@ -16,15 +22,11 @@ export class Movie {
   @Column({ default: false })
   winner: boolean;
 
-  @ManyToOne(() => Studio, (studio) => studio.movies, {
-    cascade: true,
-    eager: true,
-  })
-  studio: Studio;
+  @ManyToMany(() => Studio, (studio) => studio.movies)
+  @JoinTable()
+  studios: Studio[];
 
-  @ManyToOne(() => Producer, (producer) => producer.movies, {
-    cascade: true,
-    eager: true,
-  })
-  producer: Producer;
+  @ManyToMany(() => Producer, (producer) => producer.movies)
+  @JoinTable()
+  producers: Producer[];
 }
