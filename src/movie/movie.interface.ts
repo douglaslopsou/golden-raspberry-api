@@ -1,5 +1,5 @@
-import { Producer } from 'src/producer/producer.entity';
-import { Studio } from 'src/studio/studio.entity';
+import { Producer } from '../producer/producer.entity';
+import { Studio } from '../studio/studio.entity';
 
 export interface MovieResponse {
   id: number;
