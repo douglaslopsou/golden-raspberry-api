@@ -7,7 +7,7 @@ RESTful API for reading and analyzing the list of nominees and winners of the "W
 ## 📋 Features
 
 - 📅 Automatic reading of a CSV file with movie data on application startup
-- 🧠 In-memory database storage (SQLite)
+- 🧠 Persistent SQLite database stored at `src/database/golden-raspberry-api.sqlite`
 - 🌐 RESTful endpoints for:
   - Listing all movies
   - Listing all studios
@@ -31,7 +31,7 @@ RESTful API for reading and analyzing the list of nominees and winners of the "W
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/seu-usuario/golden-raspberry-api.git
+   git clone https://github.com/douglaslopsou/golden-raspberry-api
    cd golden-raspberry-api
    ```
 
@@ -116,7 +116,7 @@ The tests ensure that the endpoints return data consistent with the movies read 
 
 ## 📌 Notes
 
-- ✅ No external database installation required (SQLite in-memory)
+- ✅ The SQLite database is now persistent and saved at `src/database/golden-raspberry-api.sqlite`
 - ✅ Follows Richardson Maturity Model Level 2 (resources and HTTP verbs)
 - ✅ End-to-end tests implemented
 

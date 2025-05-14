@@ -13,7 +13,7 @@ import { AppController } from './app.controller';
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: ':memory:',
+      database: 'src/database/golden-raspberry-api.sqlite',
       entities: [Movie, Studio, Producer],
       synchronize: true,
     }),
