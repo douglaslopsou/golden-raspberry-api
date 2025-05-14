@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import {
   ProducerAwardIntervalResponse,
   ProducerAwardInterval,
+  ProducerYears,
 } from './producer.interface';
 import { Movie } from '../movie/movie.entity';
 
@@ -39,42 +40,57 @@ export class ProducerService {
    */
   async calculateAwardIntervals(): Promise<ProducerAwardIntervalResponse> {
     try {
-      // Busca todos os produtores e apenas os filmes vencedores de cada um
-      const producers = await this.producerRepository.find({
-        relations: ['movies'],
-        where: {
-          movies: {
-            winner: true,
-          },
-        },
+      // Busca todos os filmes vencedores com seus produtores
+      const winnerMovies = await this.movieRepository.find({
+        where: { winner: true },
+        relations: ['producers'],
       });
 
+      const producerYearsList: ProducerYears[] = [];
+
+      // Percore cada filme vencedor e adiciona o ano de lançamento ao produtor
+      for (const movie of winnerMovies) {
+        for (const producer of movie.producers) {
+          // Verifica se o produtor já existe na lista
+          let entry = producerYearsList.find(
+            (producerItem) => producerItem.id === producer.id,
+          );
+          if (!entry) {
+            // Se não existir, cria um novo produtor na lista
+            entry = { id: producer.id, name: producer.name, years: [] };
+            producerYearsList.push(entry);
+          }
+          // Adiciona o ano de lançamento ao produtor caso não exista
+          if (!entry.years.includes(movie.year)) {
+            entry.years.push(movie.year);
+          }
+        }
+      }
+
+      // Calcula os intervalos
       const intervals: ProducerAwardInterval[] = [];
-
-      for (const producer of producers) {
-        // Os filmes já vêm filtrados por winner: true
-        const years = (producer.movies || [])
-          .map((m) => m.year)
-          .sort((a, b) => a - b);
-
-        // Calcula os intervalos entre vitórias consecutivas
-        for (let i = 1; i < years.length; i++) {
+      for (const producer of producerYearsList) {
+        // Verifica se o produtor tem mais de um ano de lançamento
+        if (producer.years.length < 2) continue;
+        // Ordena os anos de lançamento
+        producer.years.sort((a, b) => a - b);
+        // Calcula os intervalos entre os anos de lançamento
+        for (let i = 1; i < producer.years.length; i++) {
           intervals.push({
             producer: `${producer.id}-${producer.name}`,
-            interval: years[i] - years[i - 1],
-            previousWin: years[i - 1],
-            followingWin: years[i],
+            interval: producer.years[i] - producer.years[i - 1],
+            previousWin: producer.years[i - 1],
+            followingWin: producer.years[i],
           });
         }
       }
 
-      // Verifica se nenhum intervalo encontrado (ex: todos os produtores com apenas uma vitória)
+      // Verifica se há intervalos
       if (!intervals.length) {
         return { min: [], max: [] };
       }
 
-      // Determina os menores e maiores intervalos
-      // Usa spread por conta do min e max não suportarem array
+      // Calcula o menor e maior intervalo usando a função Math.min e Math.max com spread operator
       const min = Math.min(...intervals.map((i) => i.interval));
       const max = Math.max(...intervals.map((i) => i.interval));
 

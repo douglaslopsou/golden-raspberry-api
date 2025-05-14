@@ -5,7 +5,6 @@ import { AppModule } from '../src/app.module';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Movie } from '../src/movie/movie.entity';
-import { MovieResponse } from '../src/movie/movie.interface';
 import { Server } from 'http';
 
 describe('MovieController (e2e)', () => {
@@ -28,7 +27,7 @@ describe('MovieController (e2e)', () => {
     const res = await request(app.getHttpServer() as Server).get('/movies');
     expect(res.status).toBe(200);
     expect(Array.isArray(res.body)).toBe(true);
-    const movies = res.body as MovieResponse[];
+    const movies = res.body as Movie[];
     if (movies.length > 0) {
       expect(movies[0]).toHaveProperty('id');
       expect(movies[0]).toHaveProperty('title');
@@ -59,7 +58,7 @@ describe('MovieController (e2e)', () => {
     const producersRes = await request(app.getHttpServer() as Server).get(
       '/producers',
     );
-    expect((moviesRes.body as MovieResponse[]).length).toBeGreaterThan(0);
+    expect((moviesRes.body as Movie[]).length).toBeGreaterThan(0);
     expect((studiosRes.body as any[]).length).toBeGreaterThan(0);
     expect((producersRes.body as any[]).length).toBeGreaterThan(0);
   });
@@ -72,6 +71,6 @@ describe('MovieController (e2e)', () => {
     const res = await request(app.getHttpServer() as Server).get('/movies');
     expect(res.status).toBe(200);
     expect(Array.isArray(res.body)).toBe(true);
-    expect((res.body as MovieResponse[]).length).toBe(0);
+    expect((res.body as Movie[]).length).toBe(0);
   });
 });

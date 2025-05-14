@@ -16,3 +16,9 @@ export interface ProducerAwardInterval {
   previousWin: number;
   followingWin: number;
 }
+
+export interface ProducerYears {
+  id: number;
+  name: string;
+  years: number[];
+}
