@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Producer } from './producer.entity';
 import { Repository } from 'typeorm';
@@ -11,6 +11,8 @@ import { Movie } from '../movie/movie.entity';
 
 @Injectable()
 export class ProducerService {
+  private readonly logger = new Logger(ProducerService.name);
+
   constructor(
     @InjectRepository(Producer)
     private readonly producerRepository: Repository<Producer>,
@@ -99,7 +101,8 @@ export class ProducerService {
         max: intervals.filter((i) => i.interval === max),
       };
     } catch (error) {
-      throw new Error(`Erro ao calcular intervalos de prêmios: ${error}`);
+      this.logger.error('Erro ao calcular intervalos de prêmios', error);
+      throw new BadRequestException('Erro ao calcular intervalos de prêmios');
     }
   }
 }
