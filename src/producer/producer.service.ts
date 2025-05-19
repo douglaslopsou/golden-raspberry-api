@@ -77,7 +77,7 @@ export class ProducerService {
         // Calcula os intervalos entre os anos de lançamento
         for (let i = 1; i < producer.years.length; i++) {
           intervals.push({
-            producer: `${producer.id}-${producer.name}`,
+            producer: producer.name,
             interval: producer.years[i] - producer.years[i - 1],
             previousWin: producer.years[i - 1],
             followingWin: producer.years[i],
